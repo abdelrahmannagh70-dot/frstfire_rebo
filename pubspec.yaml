@@ -24,6 +24,7 @@ dependencies:
   json_annotation: ^4.9.0
   flutter_svg: ^2.2.2
   pretty_dio_logger: ^1.4.0
+  image_picker: ^1.2.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -8,7 +8,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class DioFactory {
   static Dio? _dio;
 
-
   static Dio get dio {
     if (_dio == null) {
       init();
@@ -30,17 +29,41 @@ class DioFactory {
       ),
     );
 
-
     dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
-          final token = localHelper.prefs?.get(AppConstans.userToken);
+        onRequest: (options, handler) async {
+          // Ensure SharedPreferences instance is ready
+          if (localHelper.prefs == null) {
+            await localHelper.init();
+          }
 
-          if (token != null && token.toString().isNotEmpty) {
-            options.headers["Authorization"] = "Bearer $token";
+          final rawToken = localHelper.prefs?.getString(AppConstans.userToken) ??
+              localHelper.prefs?.get(AppConstans.userToken)?.toString();
+
+          if (rawToken != null && rawToken.trim().isNotEmpty) {
+            // Strip any existing "Bearer " prefix to prevent duplicate "Bearer Bearer ..."
+            final cleanToken = rawToken
+                .trim()
+                .replaceFirst(RegExp(r'^Bearer\s+', caseSensitive: false), '');
+
+            if (cleanToken.isNotEmpty) {
+              options.headers["Authorization"] = "Bearer $cleanToken";
+            } else {
+              options.headers.remove("Authorization");
+            }
+          } else {
+            options.headers.remove("Authorization");
           }
 
           handler.next(options);
+        },
+        onError: (DioException e, handler) {
+          if (kDebugMode) {
+            debugPrint(
+              "[Dio Error] ${e.requestOptions.method} ${e.requestOptions.uri} -> ${e.response?.statusCode}: ${e.message}",
+            );
+          }
+          handler.next(e);
         },
       ),
     );

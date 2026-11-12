@@ -1,7 +1,6 @@
 import 'package:app3/core/routes/app_route.dart';
 import 'package:app3/core/services/local/local_Helper.dart';
 import 'package:app3/core/themes/APP_text_Style.dart';
-import 'package:app3/core/themes/app_colors.dart';
 import 'package:app3/core/utils/app.constans.dart';
 import 'package:app3/core/widget/App_button.dart';
 import 'package:flutter/material.dart';

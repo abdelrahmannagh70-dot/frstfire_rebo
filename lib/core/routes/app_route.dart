@@ -6,5 +6,7 @@ class AppRoutes {
    static const String searchScreen = 'search_screen';
    static const String bookDetailsScreen = 'book_details_screen';
    static const String buttonNavBarScreen = 'button_nav_screen';
+   static const String myOrdersScreen = 'my_orders_screen';
+   static const String productsScreen = 'products_screen';
 
 }

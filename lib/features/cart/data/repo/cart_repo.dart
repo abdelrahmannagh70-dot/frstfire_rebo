@@ -2,14 +2,11 @@ import 'package:app3/core/networking/api_endpoint.dart';
 import 'package:app3/core/networking/dio_factory.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
 import '../model/cart_model.dart';
 
 class CartRepo {
-
   static bool _isSuccess(int? code) =>
       code != null && code >= 200 && code < 300;
-
 
   static void _logError(String name, Object e) {
     if (e is DioException) {

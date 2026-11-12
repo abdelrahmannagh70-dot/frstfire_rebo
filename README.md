@@ -6,22 +6,38 @@ The project follows a modular, feature-based structure using Cubit (flutter_bloc
 
 📱 Screenshots
 Splash & Welcome
-<p align="center"> <img src="assets/images/splash1.png" width="250" alt="Splash Screen"> <img src="assets/images/welcome 2.png" width="250" alt="Welcome Screen"> </p>
+<p align="center"> <img src="assets/images/splash1.png" width="250" alt="Splash Screen"> 
+<img src="assets/images/welcome 2.png" width="250" alt="Welcome Screen"> </p>
 Authentication
-<p align="center"> <img src="assets/images/login.png" width="250" alt="Login Screen"> <img src="assets/images/register 1.png" width="250" alt="Register Screen"> <img src="assets/images/error.png" width="250" alt="Login Error State"> </p>
+<p align="center"> <img src="assets/images/login.png" width="250" alt="Login Screen"> 
+<img src="assets/images/register 1.png" width="250" alt="Register Screen">
+<img src="assets/images/error.png" width="250" alt="Login Error State"> </p>
 Home
-<p align="center"> <img src="assets/images/home_screenn.png" width="250" alt="Home Screen"> <img src="assets/images/silder.png" width="250" alt="Home Slider"> </p>
+<p align="center"> <img src="assets/images/home_screenn.png" width="250" alt="Home Screen"> 
+<img src="assets/images/silder.png" width="250" alt="Home Slider"> </p>
 Search
-<p align="center"> <img src="assets/images/search2.png" width="250" alt="Search"> <img src="assets/images/search3.png" width="250" alt="Search Results"> </p>
+<p align="center"> <img src="assets/images/search2.png" width="250" alt="Search"> 
+<img src="assets/images/search3.png" width="250" alt="Search Results"> </p>
 Book Details
-<p align="center"> <img src="assets/images/details.png" width="250" alt="Book Details"> <img src="assets/images/details3.png" width="250" alt="Book Details Description"> </p>
+<p align="center"> <img src="assets/images/details.png" width="250" alt="Book Details"> 
+<img src="assets/images/details3.png" width="250" alt="Book Details Description"> </p>
 Bottom Navigation
-<p align="center"> <img src="assets/images/nav1.jpg" width="250" alt="Navigation 1"> <img src="assets/images/nav3.jpg" width="250" alt="Navigation 2"> </p>
+<p align="center"> <img src="assets/images/nav1.jpg" width="250" alt="Navigation 1">
+<img src="assets/images/nav3.jpg" width="250" alt="Navigation 2"> </p>
 Profile
-<p align="center"> <img src="assets/images/profile1.jpg" width="250" alt="Profile 1"> <img src="assets/images/profile2.jpg" width="250" alt="Profile 2"> </p>
+<p align="center"> 
+<img src="assets/images/profile1.jpg" width="250" alt="Profile 1"> 
+<img src="assets/images/profile2.jpg" width="250" alt="Profile 2"> 
+<img src="assets/images/edit.jpg" width="300">
+<img src="assets/images/orders.jpg" width="300">
+<img src="assets/images/orders2.jpg" width="300">
+<img src="assets/images/orders3.jpg" width="300">
+</p>
 Cart
-<p align="center"> <img src="assets/images/cart1.jpg" width="250" alt="Cart 1"> <img src="assets/images/cart2.jpg" width="250" alt="Cart 2"> </p>
-
+<p align="center"> <img src="assets/images/cart1.jpg" width="250" alt="Cart 1">
+<img src="assets/images/cart2.jpg" width="250" alt="Cart 2"> </p>
+Error Handeler
+<img src="assets/images/errorHandeler.jpg" width="250" alt="Error">
 Note: GitHub paths are case-sensitive, and filenames containing spaces (like welcome 2.png) must match exactly. Renaming files to use underscores (e.g. welcome_2.png) avoids problems.
 
 ✨ Features
@@ -53,24 +69,27 @@ Pull-to-refresh and a refresh button.
 Empty cart view and error view.
 Thin progress bar while an item is being updated or removed.
 SnackBar error messages for failed operations.
+Centralized API error handling with ApiErrorHandler.
+Readable error messages for Dio exceptions and HTTP status codes.
 Application Architecture
 State management using Cubit and flutter_bloc.
 Centralized API endpoints (ApiEndPoint).
 Centralized named routes.
 Repository pattern for data access.
+Centralized API error handling using ApiErrorHandler.
 Reusable UI components.
 Responsive layouts using Flutter ScreenUtil.
 Localization support using Easy Localization.
 🛠️ Technologies & Packages
-Package / Tool	Purpose
-Flutter / Dart	Building the app and programming language
-flutter_bloc	State management (Cubit and BlocBuilder / BlocConsumer / BlocProvider)
-bloc	Core Bloc library used by flutter_bloc
-meta	Annotations such as @immutable on state classes
-dio	Sending HTTP requests (GET / POST) to the API
-flutter_screenutil	Responsive sizing (.w, .h, .sp, .r)
-easy_localization	Multi-language support (English / German)
-pretty_dio_logger	Readable request/response logs in the console (verify in your pubspec.yaml)
+Package / Tool  Purpose
+Flutter / Dart  Building the app and programming language
+flutter_bloc    State management (Cubit and BlocBuilder / BlocConsumer / BlocProvider)
+bloc    Core Bloc library used by flutter_bloc
+meta    Annotations such as @immutable on state classes
+dio Sending HTTP requests (GET / POST) to the API
+flutter_screenutil  Responsive sizing (.w, .h, .sp, .r)
+easy_localization   Multi-language support (English / German)
+pretty_dio_logger   Readable request/response logs in the console (verify in your pubspec.yaml)
 
 Tip: Open pubspec.yaml and make sure this table matches the packages you actually use. Add any others you installed (for example image caching, shimmer, or HTML rendering packages).
 
@@ -96,19 +115,19 @@ Best Seller
 Endpoint: GET products-bestseller
 HomeCubit.getBestSellerBox() emits loading, then success or error.
 HomeRepo fetches the data and BookModel represents each book.
-State	Purpose
-HomeInitial	Before any request
-GetBestSellerLoading	Books are loading
-GetBestSellerSuccess	Request succeeded
-GetBestSellerError	Request failed
+State   Purpose
+HomeInitial Before any request
+GetBestSellerLoading    Books are loading
+GetBestSellerSuccess    Request succeeded
+GetBestSellerError  Request failed
 Slider
 Endpoint: GET sliders (response: data.sliders[].image).
-File	Responsibility
-slider_model.dart	Converts JSON to SliderModel, SliderData, SliderItem
-slider_repo.dart	Sends the request using Dio
-slider_cubit.dart	Calls the repo and emits states
-slider_state.dart	SliderInitial, SliderLoading, SliderSuccess, SliderError
-home_slider.dart	PageView.builder with indicators and Image.network
+File    Responsibility
+slider_model.dart   Converts JSON to SliderModel, SliderData, SliderItem
+slider_repo.dart    Sends the request using Dio
+slider_cubit.dart   Calls the repo and emits states
+slider_state.dart   SliderInitial, SliderLoading, SliderSuccess, SliderError
+home_slider.dart    PageView.builder with indicators and Image.network
 
 Both HomeCubit and SliderCubit are provided to the Home screen with MultiBlocProvider, so each request stays independent.
 
@@ -120,34 +139,34 @@ Endpoint: GET profile/
 Returns the user's id, name, email, address, city, phone, email verification status, and image.
 🛒 Cart Feature
 Endpoints
-Action	Method	Endpoint	Body
-Get cart	GET	cart/	none
-Add to cart	POST	add-to-cart	product_id
-Update quantity	POST	update-cart	cart_item_id, quantity
-Remove item	POST	remove-from-cart	cart_item_id
+Action  Method Endpoint   Body
+Get cart    GET    cart/  none
+Add to cart POST   add-to-cart    product_id
+Update quantity POST   update-cart    cart_item_id, quantity
+Remove item POST   remove-from-cart   cart_item_id
 
 cart_item_id is the id of the cart item (item_id in the cart response), not the product id. product_id is only used when adding to the cart.
 
 Files
-File	Responsibility
-cart_model.dart	CartResponseModel, CartDataModel, cart items, user
-cart_repo.dart	getCartData, removeFromCart, updateCart using Dio
-cart_cubit.dart	Cart logic and currentCartData cache
-cart_state.dart	Cart states
-cart_screen.dart	Main cart screen (BlocConsumer)
-cart_item_card.dart	Single item card with quantity and remove buttons
-cart_summary.dart	Order summary and checkout
-cart_skeleton_loading.dart	Loading placeholder
-cart_empty_view.dart	Empty cart view
-cart_error_view.dart	Error view
+File    Responsibility
+cart_model.dart CartResponseModel, CartDataModel, cart items, user
+cart_repo.dart  getCartData, removeFromCart, updateCart using Dio
+cart_cubit.dart Cart logic and currentCartData cache
+cart_state.dart Cart states
+cart_screen.dart    Main cart screen (BlocConsumer)
+cart_item_card.dart Single item card with quantity and remove buttons
+cart_summary.dart   Order summary and checkout
+cart_skeleton_loading.dart  Loading placeholder
+cart_empty_view.dart    Empty cart view
+cart_error_view.dart    Error view
 Cart States
-State	Purpose
-CartInitial	Before the cart is requested
-GetCartLoading	Cart is loading
-GetCartSuccess	Cart loaded (holds cartData)
-GetCartError	Failed to load the cart
-CartItemActionLoading	An item is being updated or removed
-CartItemActionError	An item action failed (SnackBar shown in CartScreen)
+State   Purpose
+CartInitial Before the cart is requested
+GetCartLoading  Cart is loading
+GetCartSuccess  Cart loaded (holds cartData)
+GetCartError    Failed to load the cart
+CartItemActionLoading   An item is being updated or removed
+CartItemActionError An item action failed (SnackBar shown in CartScreen)
 Cart Flow
 CartScreen calls getCartData() once when opened (if the state is CartInitial).
 The cubit emits GetCartLoading, then GetCartSuccess with the data.
@@ -180,24 +199,102 @@ static const String cart = "cart/";
 static const String removeFromCart = "remove-from-cart";
 static const String updateCart = "update-cart";
 }
-Layer	Responsibility
-ApiEndPoint	Base URL and endpoint paths
-Repository	Sends requests and returns models
-Model	Converts JSON into Dart objects
-Cubit	Emits loading / success / error states
-UI	Displays content based on the current state
+Layer   Responsibility
+ApiEndPoint Base URL and endpoint paths
+Repository  Sends requests and returns models
+Model   Converts JSON into Dart objects
+Cubit   Emits loading / success / error states
+UI  Displays content based on the current state
 
-Security: Never commit real tokens or passwords to GitHub, and remove the Authorization header value from any logs you share.
+🧯 Centralized API Error Handling
+
+The application uses a centralized error-handling class to convert Dio exceptions into clear, user-friendly messages. This avoids repeating the same error-handling logic in every Cubit.
+ApiErrorHandler
+File: lib/core/networking/api_error_handler.dart
+
+ApiErrorHandler.handleDioException(DioException error) checks the Dio exception type and returns an appropriate message. For unsuccessful HTTP responses, it passes the response status code to the private _handleStatusCode() method.
+DioException Types
+DioException type	Meaning / handling
+connectionTimeout	The connection took too long.
+sendTimeout	Sending the request took too long.
+receiveTimeout	Receiving the response took too long.
+badCertificate	The server certificate is invalid.
+badResponse	The server returned an unsuccessful HTTP response; the status code is checked.
+cancel	The request was cancelled.
+connectionError	A network connection error occurred.
+transformTimeout	Processing the server response took too long.
+unknown	An unexpected Dio error occurred.
+
+
+HTTP Status Code Handling
+The _handleStatusCode() method maps common HTTP status codes to readable messages:
+Status code	Meaning
+400	Bad Request
+401	Unauthorized
+403	Forbidden
+404	Not Found
+405	Method Not Allowed
+408	Request Timeout
+409	Conflict
+422	Validation Error / Unprocessable Entity
+429	Too Many Requests
+500	Internal Server Error
+502	Bad Gateway
+503	Service Unavailable
+504	Gateway Timeout
+
+
+Other or missing status codes use a general error message.
+Using the Error Handler in a Cubit
+A Cubit catches DioException separately and passes it to ApiErrorHandler. It can also catch other unexpected exceptions with a general catch block. Example from ProductCubit:
+try {
+final response = await productRepo.getProduct();
+emit(ProductSuccess(products: response));
+} on DioException catch (e) {
+emit(
+ProductError(
+error: ApiErrorHandler.handleDioException(e),
+),
+);
+
+debugPrint('Product Dio Error: ${e.message}');
+debugPrint('Status Code: ${e.response?.statusCode}');
+debugPrint('Error Type: ${e.type}');
+} catch (e) {
+emit(
+ProductError(
+error: 'Something went wrong. Please try again.',
+),
+);
+debugPrint('Product Error: $e');
+}
+Error Handling Flow
+1. The Cubit starts the API request.
+2. The Repository sends the request using Dio.
+3. If the request succeeds, the Cubit emits a success state.
+4. If Dio throws a DioException, the Cubit passes it to ApiErrorHandler.
+5. ApiErrorHandler identifies the exception type or HTTP status code and returns a readable message.
+6. The Cubit emits an error state containing that message.
+7. Any other unexpected exception is handled by the general catch block.
+   Debug Logging
+   During development, debugPrint() can be used to inspect useful diagnostic details such as the exception message, HTTP status code, exception type, and request URL. Do not print or share passwords, access tokens, or other sensitive data.
+   Benefits
+- Reuses the same error-handling logic across Cubits.
+- Provides consistent error messages.
+- Keeps Cubit code cleaner.
+- Makes network and server errors easier to debug.
+- Handles expected Dio errors and unexpected exceptions separately.
+  Security: Never commit real tokens or passwords to GitHub, and remove the Authorization header value from any logs you share.
 
 🧯 Troubleshooting & Lessons Learned
 
 Problems solved while building the cart, kept here for future reference:
 
-Status	Symptom	Cause	Fix
-301 Moved Permanently	Remove item did nothing	POST endpoint ended with / (remove-from-cart/) and the server redirected it	Removed the trailing / from POST endpoints
-404 Not Found	Add to cart did nothing	Wrong endpoint name (add_to_cart)	Changed to add-to-cart to match the API naming style
-422 Unprocessable Entity	Quantity did not change	Server expects the field quantity, the app sent change_quantity	Renamed the body field to quantity
-Silent failures	No error shown to the user	catch returned false without logging	Added debugPrint logging and a CartItemActionError state with a SnackBar
+Status  Symptom    Cause  Fix
+301 Moved Permanently   Remove item did nothing    POST endpoint ended with / (remove-from-cart/) and the server redirected it    Removed the trailing / from POST endpoints
+404 Not Found   Add to cart did nothing    Wrong endpoint name (add_to_cart)  Changed to add-to-cart to match the API naming style
+422 Unprocessable Entity    Quantity did not change    Server expects the field quantity, the app sent change_quantity    Renamed the body field to quantity
+Silent failures No error shown to the user catch returned false without logging   Added debugPrint logging and a CartItemActionError state with a SnackBar
 
 Takeaways
 
@@ -239,7 +336,8 @@ app3/
 │   ├── core/
 │   │   ├── networking/
 │   │   │   ├── api_endpoint.dart
-│   │   │   └── dio_factory.dart
+│   │   │   ├── dio_factory.dart
+│   │   │   └── api_error_handler.dart
 │   │   ├── routes/
 │   │   │   ├── app_route.dart
 │   │   │   └── app_router.dart

@@ -47,10 +47,10 @@ class _ButtonNavBarScreenState extends State<ButtonNavBarScreen> {
   child: CartScreen(),
 ),
 
-    BlocProvider(
+    BlocProvider<ProfileCubit>(
       create: (context) => ProfileCubit()..getProfileData(),
-      child: ProfileScreen(),
-    )
+      child: const ProfileScreen(),
+    ),
 
   ];
 
@@ -59,7 +59,7 @@ class _ButtonNavBarScreenState extends State<ButtonNavBarScreen> {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
 
-      // ✅ IndexedStack بيحافظ على حالة كل شاشة (السكرول والبيانات)
+
       body: IndexedStack(
         index: currentIndex,
         children: screens,
@@ -86,7 +86,7 @@ class _ButtonNavBarScreenState extends State<ButtonNavBarScreen> {
     );
   }
 
-  // ✅ دالة واحدة بدل ما نكرر نفس الكود 4 مرات
+
   BottomNavigationBarItem _buildItem(
       Widget Function({double? width, double? height, ColorFilter? colorFilter}) svg,
       int index,
