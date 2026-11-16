@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "720736239205",
+    "project_id": "bookia-c6640",
+    "storage_bucket": "bookia-c6640.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720736239205:android:09d1b717baff4c6bc7d08c",
+        "android_client_info": {
+          "package_name": "com.example.app3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720736239205-vag3grvqqu5g60g7ejugs9q2cm32cgm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAajRu5JSYfJ67kBRlA7ief3Kl4XFtL_4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720736239205-vag3grvqqu5g60g7ejugs9q2cm32cgm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

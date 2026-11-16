@@ -90,6 +90,11 @@ dio Sending HTTP requests (GET / POST) to the API
 flutter_screenutil  Responsive sizing (.w, .h, .sp, .r)
 easy_localization   Multi-language support (English / German)
 pretty_dio_logger   Readable request/response logs in the console (verify in your pubspec.yaml)
+firebase_core    Firebase initialization (required when Firebase is configured)
+firebase_auth    Optional Firebase Authentication
+cloud_firestore  Optional Cloud Firestore database
+firebase_storage Optional Firebase file storage
+firebase_messaging Optional Firebase push notifications
 
 Tip: Open pubspec.yaml and make sure this table matches the packages you actually use. Add any others you installed (for example image caching, shimmer, or HTML rendering packages).
 
@@ -206,200 +211,35 @@ Model   Converts JSON into Dart objects
 Cubit   Emits loading / success / error states
 UI  Displays content based on the current state
 
-🧯 Centralized API Error Handling
 
-The application uses a centralized error-handling class to convert Dio exceptions into clear, user-friendly messages. This avoids repeating the same error-handling logic in every Cubit.
-ApiErrorHandler
-File: lib/core/networking/api_error_handler.dart
-
-ApiErrorHandler.handleDioException(DioException error) checks the Dio exception type and returns an appropriate message. For unsuccessful HTTP responses, it passes the response status code to the private _handleStatusCode() method.
-DioException Types
-DioException type	Meaning / handling
-connectionTimeout	The connection took too long.
-sendTimeout	Sending the request took too long.
-receiveTimeout	Receiving the response took too long.
-badCertificate	The server certificate is invalid.
-badResponse	The server returned an unsuccessful HTTP response; the status code is checked.
-cancel	The request was cancelled.
-connectionError	A network connection error occurred.
-transformTimeout	Processing the server response took too long.
-unknown	An unexpected Dio error occurred.
+## 🔥 Firebase Integration
+<img src="assets/images/firebase1.png" width="300">
+<img src="assets/images/firebase2.png" width="300">
 
 
-HTTP Status Code Handling
-The _handleStatusCode() method maps common HTTP status codes to readable messages:
-Status code	Meaning
-400	Bad Request
-401	Unauthorized
-403	Forbidden
-404	Not Found
-405	Method Not Allowed
-408	Request Timeout
-409	Conflict
-422	Validation Error / Unprocessable Entity
-429	Too Many Requests
-500	Internal Server Error
-502	Bad Gateway
-503	Service Unavailable
-504	Gateway Timeout
+This project currently uses a REST API with **Dio** for its existing backend features, including login, books, profile, and cart operations. Firebase can be added alongside that backend. Adding Firebase Core does **not** automatically move the existing login, products, profile, or cart data to Firebase.
 
+Use only the Firebase services your app needs:
 
-Other or missing status codes use a general error message.
-Using the Error Handler in a Cubit
-A Cubit catches DioException separately and passes it to ApiErrorHandler. It can also catch other unexpected exceptions with a general catch block. Example from ProductCubit:
-try {
-final response = await productRepo.getProduct();
-emit(ProductSuccess(products: response));
-} on DioException catch (e) {
-emit(
-ProductError(
-error: ApiErrorHandler.handleDioException(e),
-),
-);
+| Firebase service | What it can be used for in Bookia |
+|---|---|
+| Firebase Core | Initializes Firebase in the Flutter app. Required by the other Firebase Flutter plugins. |
+| Firebase Authentication | Optional alternative or additional authentication using email/password, Google, etc. |
+| Cloud Firestore | Optional database for app data such as favorites, reviews, or user-generated content. |
+| Firebase Storage | Optional storage for user-uploaded profile pictures or other files. |
+| Firebase Cloud Messaging | Push notifications, for example order updates or promotions. |
 
-debugPrint('Product Dio Error: ${e.message}');
-debugPrint('Status Code: ${e.response?.statusCode}');
-debugPrint('Error Type: ${e.type}');
-} catch (e) {
-emit(
-ProductError(
-error: 'Something went wrong. Please try again.',
-),
-);
-debugPrint('Product Error: $e');
-}
-Error Handling Flow
-1. The Cubit starts the API request.
-2. The Repository sends the request using Dio.
-3. If the request succeeds, the Cubit emits a success state.
-4. If Dio throws a DioException, the Cubit passes it to ApiErrorHandler.
-5. ApiErrorHandler identifies the exception type or HTTP status code and returns a readable message.
-6. The Cubit emits an error state containing that message.
-7. Any other unexpected exception is handled by the general catch block.
-   Debug Logging
-   During development, debugPrint() can be used to inspect useful diagnostic details such as the exception message, HTTP status code, exception type, and request URL. Do not print or share passwords, access tokens, or other sensitive data.
-   Benefits
-- Reuses the same error-handling logic across Cubits.
-- Provides consistent error messages.
-- Keeps Cubit code cleaner.
-- Makes network and server errors easier to debug.
-- Handles expected Dio errors and unexpected exceptions separately.
-  Security: Never commit real tokens or passwords to GitHub, and remove the Authorization header value from any logs you share.
+### 1. Prerequisites
 
-🧯 Troubleshooting & Lessons Learned
+Install and configure:
 
-Problems solved while building the cart, kept here for future reference:
+- Flutter SDK and Dart SDK.
+- Node.js and npm.
+- The official Firebase CLI.
+- FlutterFire CLI.
+- A Google account with access to the Firebase project.
 
-Status  Symptom    Cause  Fix
-301 Moved Permanently   Remove item did nothing    POST endpoint ended with / (remove-from-cart/) and the server redirected it    Removed the trailing / from POST endpoints
-404 Not Found   Add to cart did nothing    Wrong endpoint name (add_to_cart)  Changed to add-to-cart to match the API naming style
-422 Unprocessable Entity    Quantity did not change    Server expects the field quantity, the app sent change_quantity    Renamed the body field to quantity
-Silent failures No error shown to the user catch returned false without logging   Added debugPrint logging and a CartItemActionError state with a SnackBar
+Install the Firebase CLI:
 
-Takeaways
-
-Read the Dio logs first: the status code usually tells you where the problem is.
-Match field names and endpoint paths exactly with the API.
-Do not swallow exceptions silently in repositories.
-🧭 Navigation
-
-Centralized named routing through AppRouter:
-
-Login, Register, Welcome, Home
-Bottom navigation between Home, Cart, and Profile (and other tabs if configured)
-
-BlocProvider / MultiBlocProvider provide cubits to the screens that need them.
-
-🎨 Reusable Components
-AppButton: customizable button.
-CustomTextFromFeild: reusable text field.
-AppTextStyle: centralized text styles.
-AppColors: centralized colors.
-AppValidator: input validation helpers.
-🌍 Supported Languages
-
-Using Easy Localization:
-
-🇬🇧 English
-🇩🇪 German
-📂 Project Structure
-
-Illustrative. Update it to match the files that actually exist in your project.
-
-text
-app3/
-├── assets/
-│   ├── images/
-│   └── translations/
-│
-├── lib/
-│   ├── core/
-│   │   ├── networking/
-│   │   │   ├── api_endpoint.dart
-│   │   │   ├── dio_factory.dart
-│   │   │   └── api_error_handler.dart
-│   │   ├── routes/
-│   │   │   ├── app_route.dart
-│   │   │   └── app_router.dart
-│   │   ├── themes/
-│   │   │   ├── app_colors.dart
-│   │   │   └── APP_text_Style.dart
-│   │   ├── utils/
-│   │   │   └── app_validator.dart
-│   │   └── widget/
-│   │       ├── App_button.dart
-│   │       └── custom_text_from_feild.dart
-│   │
-│   ├── features/
-│   │   ├── auth/
-│   │   ├── home/
-│   │   ├── cart/
-│   │   │   ├── data/
-│   │   │   │   ├── model/cart_model.dart
-│   │   │   │   └── repo/cart_repo.dart
-│   │   │   └── preentaion/
-│   │   │       ├── cart_cubit.dart
-│   │   │       ├── cart_state.dart
-│   │   │       └── ui/
-│   │   │           ├── cart_screen.dart
-│   │   │           └── widgets/
-│   │   │               ├── cart_empty_view.dart
-│   │   │               ├── cart_error_view.dart
-│   │   │               ├── cart_item_card.dart
-│   │   │               ├── cart_skeleton_loading.dart
-│   │   │               └── cart_summary.dart
-│   │   └── welcome/
-│   │
-│   ├── bookia_App.dart
-│   └── main.dart
-│
-├── README.md
-└── pubspec.yaml
-🚀 Getting Started
-Prerequisites
-Flutter SDK
-Dart SDK
-Android Studio or Visual Studio Code
-An Android emulator or a physical device
-Installation
-bash
-git clone YOUR_REPOSITORY_URL
-cd app3
-flutter pub get
-flutter devices
-flutter run
-
-After changing const values such as endpoints, use Hot Restart (not Hot Reload).
-
-🎯 Project Goals
-Build a clean and responsive Flutter application.
-Practice reusable widget development and form validation.
-Integrate REST APIs using Dio (GET and POST).
-Represent API responses using data models.
-Separate data fetching into repository classes.
-Manage auth, home, slider, and cart states with Cubit.
-Organize navigation using named routes.
-Debug API problems using HTTP status codes and logs.
-👨‍💻 Author
-
-Developed as a Flutter learning project to practice mobile application development, API integration, state management, and clean code organization.
+```bash
+npm install -g firebase-tools

@@ -17,7 +17,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AppRouter {
   static Route? onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
-      // Login Screen
       case AppRoutes.loginScreen:
         return MaterialPageRoute(
           settings: setting,
@@ -35,28 +34,24 @@ class AppRouter {
           builder: (_) => const ButtonNavBarScreen(),
         );
 
-      // Home Screen
       case AppRoutes.homeScreen:
         return MaterialPageRoute(
           settings: setting,
           builder: (_) => const ButtonNavBarScreen(),
         );
 
-      // Welcome Screen
       case AppRoutes.welcomeScreen:
         return MaterialPageRoute(
           settings: setting,
           builder: (_) => const WelcomeScreen(),
         );
 
-      // Register Screen
       case AppRoutes.registerScreen:
         return MaterialPageRoute(
           settings: setting,
           builder: (_) => const RegisterScreen(),
         );
 
-      // Search Screen
       case AppRoutes.searchScreen:
         return MaterialPageRoute(
           settings: setting,
@@ -67,7 +62,6 @@ class AppRouter {
               ),
         );
 
-      // Book Details Screen
       case AppRoutes.bookDetailsScreen:
         int id = setting.arguments as int;
 
@@ -80,7 +74,6 @@ class AppRouter {
               ),
         );
 
-      // My Orders Screen
       case AppRoutes.myOrdersScreen:
         return MaterialPageRoute(
           settings: setting,
@@ -91,7 +84,6 @@ class AppRouter {
               ),
         );
 
-    // Products Screen
       case AppRoutes.productsScreen:
         return MaterialPageRoute(
           settings: setting,
